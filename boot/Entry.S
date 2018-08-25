@@ -5,7 +5,8 @@
 	.global vector_end
 
 	vector_start:
-		MOV		R0, R1
+		LDR		R0, =0x10000000
+		LDR		R1, [R0]
 	vector_end:
 		.space 1024, 0
 .end
