@@ -1,1 +1,5 @@
 /build/
+/.settings/language.settings.xml
+/.settings/org.eclipse.cdt.core.prefs
+/.settings/org.eclipse.cdt.ui.prefs
+*.settings.xml
