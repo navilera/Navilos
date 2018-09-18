@@ -14,17 +14,20 @@ MAP_FILE = build/navilos.map
 ASM_SRCS = $(wildcard boot/*.S)
 ASM_OBJS = $(patsubst boot/%.S, build/%.os, $(ASM_SRCS))
 
-VPATH = boot \
-        hal/$(TARGET)
+VPATH = boot 			\
+        hal/$(TARGET)	\
+        lib
 
 C_SRCS  = $(notdir $(wildcard boot/*.c))
 C_SRCS += $(notdir $(wildcard hal/$(TARGET)/*.c))
+C_SRCS += $(notdir $(wildcard lib/*.c))
 C_OBJS = $(patsubst %.c, build/%.o, $(C_SRCS))
 
 INC_DIRS  = -I include 			\
             -I hal	   			\
-            -I hal/$(TARGET)
-            
+            -I hal/$(TARGET)	\
+            -I lib
+
 CFLAGS = -c -g -std=c11
 
 navilos = build/navilos.axf
