@@ -22,8 +22,8 @@
         svc_handler_addr:       .word dummy_handler
         pftch_abt_handler_addr: .word dummy_handler
         data_abt_handler_addr:  .word dummy_handler
-        irq_handler_addr:       .word dummy_handler
-        fiq_handler_addr:       .word dummy_handler
+        irq_handler_addr:       .word Irq_Handler
+        fiq_handler_addr:       .word Fiq_Handler
     vector_end:
 
     reset_handler:
