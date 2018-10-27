@@ -14,7 +14,7 @@ extern volatile Timer_t* Timer;
 
 static void interrupt_handler(void);
 
-static uint32_t internal_1ms_counter;
+static uint32_t sInternal_1ms_counter;
 
 void Hal_timer_init(void)
 {
@@ -35,12 +35,12 @@ void Hal_timer_init(void)
     Timer->timerxcontrol.bits.TimerPre = 0;
     Timer->timerxcontrol.bits.IntEnable = 1;
 
-    uint32_t interval = TIMER_10HZ_INTERVAL / 100;
+    uint32_t interval_1ms = TIMER_1MZ_INTERVAL / 1000;
 
-    Timer->timerxload = interval;
+    Timer->timerxload = interval_1ms;
     Timer->timerxcontrol.bits.TimerEn = 1;
 
-    internal_1ms_counter = 0;
+    sInternal_1ms_counter = 0;
 
     // Register Timer interrupt handler
     Hal_interrupt_enable(TIMER_INTERRUPT);
@@ -49,12 +49,12 @@ void Hal_timer_init(void)
 
 uint32_t Hal_timer_get_1ms_counter(void)
 {
-    return internal_1ms_counter;
+    return sInternal_1ms_counter;
 }
 
 static void interrupt_handler(void)
 {
-    internal_1ms_counter++;
+    sInternal_1ms_counter++;
 
     Timer->timerxintclr = 1;
 }
