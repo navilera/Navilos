@@ -7,9 +7,11 @@ CC = arm-none-eabi-gcc
 AS = arm-none-eabi-as
 LD = arm-none-eabi-gcc
 OC = arm-none-eabi-objcopy
+OD = arm-none-eabi-objdump
 
 LINKER_SCRIPT = ./navilos.ld
 MAP_FILE = build/navilos.map
+SYM_FILE = build/navilos.sym
 
 ASM_SRCS = $(wildcard boot/*.S)
 ASM_OBJS = $(patsubst boot/%.S, build/%.os, $(ASM_SRCS))
@@ -49,7 +51,7 @@ run: $(navilos)
 	qemu-system-arm -M realview-pb-a8 -kernel $(navilos) -nographic
 	
 debug: $(navilos)
-	qemu-system-arm -M realview-pb-a8 -kernel $(navilos) -S -gdb tcp::1234,ipv4
+	qemu-system-arm -M realview-pb-a8 -kernel $(navilos) -nographic -S -gdb tcp::1234,ipv4
 	
 gdb:
 	arm-none-eabi-gdb
@@ -59,6 +61,7 @@ kill:
 	
 $(navilos): $(ASM_OBJS) $(C_OBJS) $(LINKER_SCRIPT)
 	$(LD) -n -T $(LINKER_SCRIPT) -o $(navilos) $(ASM_OBJS) $(C_OBJS) -Wl,-Map=$(MAP_FILE) $(LDFLAGS)
+	$(OD) -t $(navilos) > $(SYM_FILE)
 	$(OC) -O binary $(navilos) $(navilos_bin)
 	
 build/%.os: %.S
