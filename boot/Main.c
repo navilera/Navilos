@@ -105,10 +105,9 @@ void User_task0(void)
 {
     uint32_t local = 0;
 
-    debug_printf("User Task #0 SP=0x%x\n", &local);
-
     while(true)
     {
+        debug_printf("User Task #0 SP=0x%x\n", &local);
         Kernel_yield();
     }
 }
@@ -117,10 +116,9 @@ void User_task1(void)
 {
     uint32_t local = 0;
 
-    debug_printf("User Task #1 SP=0x%x\n", &local);
-
     while(true)
     {
+        debug_printf("User Task #1 SP=0x%x\n", &local);
         Kernel_yield();
     }
 }
@@ -129,10 +127,9 @@ void User_task2(void)
 {
     uint32_t local = 0;
 
-    debug_printf("User Task #2 SP=0x%x\n", &local);
-
     while(true)
     {
+        debug_printf("User Task #2 SP=0x%x\n", &local);
         Kernel_yield();
     }
 }
