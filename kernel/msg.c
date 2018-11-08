@@ -17,6 +17,8 @@ void Kernel_msgQ_init(void)
 {
     for (uint32_t i = 0 ; i < KernelMsgQ_Num ; i++)
     {
+        sMsgQ[i].front = 0;
+        sMsgQ[i].rear = 0;
         memclr(sMsgQ[i].Queue, MSG_Q_SIZE_BYTE);
     }
 }
@@ -53,6 +55,11 @@ bool Kernel_msgQ_is_full(KernelMsgQ_t Qname)
 
 bool Kernel_msgQ_enqueue(KernelMsgQ_t Qname, uint8_t data)
 {
+    if (Qname >= KernelMsgQ_Num)
+    {
+        return false;
+    }
+
     if (Kernel_msgQ_is_full(Qname))
     {
         return false;
@@ -68,6 +75,11 @@ bool Kernel_msgQ_enqueue(KernelMsgQ_t Qname, uint8_t data)
 
 bool Kernel_msgQ_dequeue(KernelMsgQ_t Qname, uint8_t* out_data)
 {
+    if (Qname >= KernelMsgQ_Num)
+    {
+        return false;
+    }
+
     if (Kernel_msgQ_is_empty(Qname))
     {
         return false;
