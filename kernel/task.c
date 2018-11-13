@@ -60,6 +60,11 @@ uint32_t Kernel_task_create(KernelTaskFunc_t startFunc)
     return (sAllocated_tcb_index - 1);
 }
 
+uint32_t Kernel_task_get_current_task_id(void)
+{
+    return sCurrent_tcb_index;
+}
+
 void Kernel_task_scheduler(void)
 {
     sCurrent_tcb = &sTask_list[sCurrent_tcb_index];
