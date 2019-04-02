@@ -2,6 +2,7 @@ ARCH = armv7-a
 MCPU = cortex-a8
 
 TARGET = rvpb
+ARM_ARCH = cortexAR
 
 CC = arm-none-eabi-gcc
 AS = arm-none-eabi-as
@@ -9,36 +10,42 @@ LD = arm-none-eabi-gcc
 OC = arm-none-eabi-objcopy
 OD = arm-none-eabi-objdump
 
-LINKER_SCRIPT = ./navilos.ld
-MAP_FILE = build/navilos.map
-SYM_FILE = build/navilos.sym
+OUTDIR=./out
 
-ASM_SRCS = $(wildcard boot/*.S)
-ASM_OBJS = $(patsubst boot/%.S, build/%.os, $(ASM_SRCS))
+LINKER_SCRIPT = ./build/rvpb/navilos.ld
+MAP_FILE = $(OUTDIR)/navilos.map
+SYM_FILE = $(OUTDIR)/navilos.sym
 
-VPATH = boot 			\
+ASM_SRCS = $(wildcard ./boot/$(TARGET)/*.S)
+ASM_OBJS = $(patsubst ./boot/$(TARGET)/%.S, $(OUTDIR)/%.os, $(ASM_SRCS))
+
+VPATH = boot/$(TARGET) 			\
         hal/$(TARGET)	\
         lib				\
+	lib/$(ARM_ARCH)		\
         kernel
 
-C_SRCS  = $(notdir $(wildcard boot/*.c))
-C_SRCS += $(notdir $(wildcard hal/$(TARGET)/*.c))
-C_SRCS += $(notdir $(wildcard lib/*.c))
-C_SRCS += $(notdir $(wildcard kernel/*.c))
-C_OBJS = $(patsubst %.c, build/%.o, $(C_SRCS))
+C_SRCS  = $(notdir $(wildcard ./boot/$(TARGET)/*.c))
+C_SRCS += $(notdir $(wildcard ./hal/$(TARGET)/*.c))
+C_SRCS += $(notdir $(wildcard ./lib/*.c))
+C_SRCS += $(notdir $(wildcard ./lib/$(ARM_ARCH)/*.c))
+C_SRCS += $(notdir $(wildcard ./kernel/*.c))
+C_OBJS = $(patsubst %.c, $(OUTDIR)/%.o, $(C_SRCS))
 
-INC_DIRS  = -I include 			\
+INC_DIRS  = -I boot/$(TARGET)	\
+            -I include 			\
             -I hal	   			\
             -I hal/$(TARGET)	\
             -I lib				\
+            -I lib/$(ARM_ARCH)				\
             -I kernel
 
 CFLAGS = -c -g -std=c11 -mthumb-interwork
 
 LDFLAGS = -nostartfiles -nostdlib -nodefaultlibs -static -lgcc
 
-navilos = build/navilos.axf
-navilos_bin = build/navilos.bin
+navilos = $(OUTDIR)/navilos.axf
+navilos_bin = $(OUTDIR)/navilos.bin
 
 .PHONY: all clean run debug gdb
 
@@ -64,11 +71,11 @@ $(navilos): $(ASM_OBJS) $(C_OBJS) $(LINKER_SCRIPT)
 	$(OD) -t $(navilos) > $(SYM_FILE)
 	$(OC) -O binary $(navilos) $(navilos_bin)
 	
-build/%.os: %.S
+$(OUTDIR)/%.os: %.S
 	mkdir -p $(shell dirname $@)
 	$(CC) -march=$(ARCH) -mcpu=$(MCPU) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<
 	
-build/%.o: %.c
+$(OUTDIR)/%.o: %.c
 	mkdir -p $(shell dirname $@)
 	$(CC) -march=$(ARCH) -mcpu=$(MCPU) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<
 	
