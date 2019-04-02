@@ -52,7 +52,7 @@ navilos_bin = $(OUTDIR)/navilos.bin
 all: $(navilos)
 
 clean:
-	@rm -fr build
+	@rm -fr $(OUTDIR)
 	
 run: $(navilos)
 	qemu-system-arm -M realview-pb-a8 -kernel $(navilos) -nographic
