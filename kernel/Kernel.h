@@ -8,6 +8,8 @@
 #ifndef KERNEL_KERNEL_H_
 #define KERNEL_KERNEL_H_
 
+#include "stdint.h"
+#include "stdbool.h"
 #include "task.h"
 #include "event.h"
 #include "msg.h"

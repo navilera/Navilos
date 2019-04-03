@@ -91,5 +91,7 @@ bool Kernel_msgQ_dequeue(KernelMsgQ_t Qname, uint8_t* out_data)
     uint32_t idx = sMsgQ[Qname].front;
     *out_data = sMsgQ[Qname].Queue[idx];
 
+    sMsgQ[Qname].Queue[idx] = 0;	// clear
+
     return true;
 }
