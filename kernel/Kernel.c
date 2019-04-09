@@ -95,6 +95,19 @@ uint32_t Kernel_recv_msg(KernelMsgQ_t Qname, void* out_data, uint32_t count)
     return count;
 }
 
+void Kernel_flush_msg(KernelMsgQ_t Qname)
+{
+	uint8_t d = 0;
+
+	while(true)
+	{
+		if (false == Kernel_msgQ_dequeue(Qname, &d))
+		{
+			break;
+		}
+	}
+}
+
 void Kernel_lock_sem(void)
 {
     while(false == Kernel_sem_test())

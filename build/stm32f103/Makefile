@@ -3,7 +3,7 @@ ARMTHMODE = thumb
 ARM_ARCH = cortexM
 
 SOC = stm32f10c8
-BOARD = bluepill
+BOARD = stm32f103
 
 ifdef LOADER
 OUTNAME = loader
