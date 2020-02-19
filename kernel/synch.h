@@ -8,11 +8,11 @@
 #ifndef KERNEL_SYNCH_H_
 #define KERNEL_SYNCH_H_
 
-typedef struct KernelMutext_t
+typedef struct KernelMutex_t
 {
     uint32_t owner;
     bool     lock;
-} KernelMutext_t;
+} KernelMutex_t;
 
 void Kernel_sem_init(int32_t max);
 bool Kernel_sem_test(void);
