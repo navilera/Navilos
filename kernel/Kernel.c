@@ -68,8 +68,7 @@ bool Kernel_send_msg(KernelMsgQ_t Qname, void* data, uint32_t count)
         {
             for (uint32_t j = 0 ; j < i ; j++)
             {
-                uint8_t rollback;
-                Kernel_msgQ_dequeue(Qname, &rollback);
+                Kernel_msgQ_rollback_queue(Qname);
             }
             return false;
         }
