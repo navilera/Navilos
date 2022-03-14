@@ -111,9 +111,7 @@ bool Kernel_msgQ_rollback_queue(KernelMsgQ_t Qname)
     uint32_t idx = sMsgQ[Qname].rear;
     sMsgQ[Qname].Queue[idx] = 0;	// clear
     
-	sMsgQ[Qname].rear = (sMsgQ[Qname].rear+MSG_Q_SIZE_BYTE-1) % MSG_Q_SIZE_BYTE;
-
-
+    sMsgQ[Qname].rear = (sMsgQ[Qname].rear+MSG_Q_SIZE_BYTE-1) % MSG_Q_SIZE_BYTE;
 
     return true;
 }
