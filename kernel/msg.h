@@ -31,5 +31,6 @@ bool Kernel_msgQ_is_empty(KernelMsgQ_t Qname);
 bool Kernel_msgQ_is_full(KernelMsgQ_t Qname);
 bool Kernel_msgQ_enqueue(KernelMsgQ_t Qname, uint8_t data);
 bool Kernel_msgQ_dequeue(KernelMsgQ_t Qname, uint8_t* out_data);
+bool Kernel_msgQ_rollback_queue(KernelMsgQ_t Qname);
 
 #endif /* KERNEL_MSG_H_ */
