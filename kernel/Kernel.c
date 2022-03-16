@@ -62,14 +62,15 @@ bool Kernel_send_msg(KernelMsgQ_t Qname, void* data, uint32_t count)
 {
     uint8_t* d = (uint8_t*)data;
 
+	if (count > (MSG_Q_SIZE_BYTE - Kernel_msgQ_count(Qname)))
+	{
+		return false;
+	}
+
     for (uint32_t i = 0 ; i < count ; i++)
     {
         if (false == Kernel_msgQ_enqueue(Qname, *d))
         {
-            for (uint32_t j = 0 ; j < i ; j++)
-            {
-                Kernel_msgQ_rollback_queue(Qname);
-            }
             return false;
         }
         d++;

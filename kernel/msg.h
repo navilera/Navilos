@@ -26,11 +26,11 @@ typedef struct KernelCirQ_t
     uint8_t  Queue[MSG_Q_SIZE_BYTE];
 } KernelCirQ_t;
 
-void Kernel_msgQ_init(void);
-bool Kernel_msgQ_is_empty(KernelMsgQ_t Qname);
-bool Kernel_msgQ_is_full(KernelMsgQ_t Qname);
-bool Kernel_msgQ_enqueue(KernelMsgQ_t Qname, uint8_t data);
-bool Kernel_msgQ_dequeue(KernelMsgQ_t Qname, uint8_t* out_data);
-bool Kernel_msgQ_rollback_queue(KernelMsgQ_t Qname);
+void 	 Kernel_msgQ_init(void);
+bool 	 Kernel_msgQ_is_empty(KernelMsgQ_t Qname);
+bool 	 Kernel_msgQ_is_full(KernelMsgQ_t Qname);
+bool 	 Kernel_msgQ_enqueue(KernelMsgQ_t Qname, uint8_t data);
+bool 	 Kernel_msgQ_dequeue(KernelMsgQ_t Qname, uint8_t* out_data);
+uint32_t Kernel_msgQ_count(KernelMsgQ_t Qname);
 
 #endif /* KERNEL_MSG_H_ */
